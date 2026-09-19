@@ -33,29 +33,49 @@ function getUserLocation() {
 const currentPlace = document.getElementById("currentPlace");
 const location = await getUserLocation();
 const locationString = `${location.latitude},${location.longitude}`;
+const unitToggle = document.getElementById("unit-toggle");
+let currentPreference = "C";
+unitToggle.addEventListener("click", () => {
+  if (currentPreference === "C") {
+    currentPreference = "F";
+  } else {
+    currentPreference = "C";
+  }
+  displayWeather(locationString);
+});
 
 async function displayWeather(location) {
-  const data = await getWeatherData(location);
-  currentPlace.textContent = data.resolvedAddress;
+  try {
+    const data = await getWeatherData(location, currentPreference);
 
-  const currentData = getCurrentWeather(data);
-  const weeklyData = getWeeklyForecast(data);
-  const hourlyData = getHourlyForecast(data);
-  const todaysData = getTodaysInfo(data);
+    currentPlace.textContent = data.resolvedAddress;
 
-  displayCurrentWeather(currentData);
-  displayHourlyForcast(hourlyData);
-  displayTodaysInfo(todaysData);
-  displayWeeklyForcast(weeklyData);
+    const currentData = getCurrentWeather(data);
+    const weeklyData = getWeeklyForecast(data);
+    const hourlyData = getHourlyForecast(data);
+    const todaysData = getTodaysInfo(data);
+
+    displayCurrentWeather(currentData, currentPreference);
+    displayHourlyForcast(hourlyData, currentPreference);
+    displayTodaysInfo(todaysData, currentPreference);
+    displayWeeklyForcast(weeklyData, currentPreference);
+  } catch (error) {
+    alert(error.message);
+    return;
+  }
 }
 
 displayWeather(locationString);
 
 function getSearchWeather() {
-  const searchBtn = document.getElementById("button");
+  const searchBtn = document.getElementById("searchLocation");
 
   searchBtn.addEventListener("click", () => {
     const searchInput = document.getElementById("search").value.trim();
+    if (searchInput === "") {
+      alert("Please enter a city");
+      return;
+    }
     displayWeather(searchInput);
   });
 }
