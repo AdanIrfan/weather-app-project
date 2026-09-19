@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Forecast</title>
+  </head>
+  <body>
+    <header>
+      <label for="search"
+        >Search
+        <input type="search" id="search" name="search" />
+      </label>
+      <button type="search">Search</button>
+    </header>
+    <main>
+      <div id="currentWeather">
+        <h1 id="currentPlace"></h1>
+        <h2 id="currentTemp"></h2>
+        <h3 id="currentCondition"></h3>
+
+        <div id="currentDetails">
+          <p id="currentFeelsLike"></p>
+          <p id="currentHumidity"></p>
+          <p id="currentWind"></p>
+        </div>
+      </div>
+
+      <div id="todaysForecast">
+        <h1>Today's Information</h1>
+        <div id="todaysForecastDetails">
+          <p id="description"></p>
+          <p id="icon"></p>
+          <p id="tempmax"></p>
+          <p id="tempmin"></p>
+          <p id="sunrise"></p>
+          <p id="sunset"></p>
+        </div>
+      </div>
+
+      <div id="hourlyForcast">
+        <h1>Hourly Forecast</h1>
+        <div id="hourlyContainer"></div>
+      </div>
+
+      <div id="weeklyForcast">
+        <h1>7-DAY FORECAST</h1>
+      </div>
+    </main>
+  </body>
+</html>

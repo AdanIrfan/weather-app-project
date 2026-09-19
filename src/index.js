@@ -1,36 +1,62 @@
 // index.js
 import "./styles.css";
 import {
-  getWeatherData,
   getCurrentWeather,
   getWeeklyForecast,
   getHourlyForecast,
-  getTodaysForecast,
-} from "./data.js";
+  getTodaysInfo,
+} from "./weatherData.js";
+import { getWeatherData } from "./weatherApi.js";
 
-export const data = await getWeatherData("lahore");
+import {
+  displayCurrentWeather,
+  displayHourlyForcast,
+  displayTodaysInfo,
+  displayWeeklyForcast,
+} from "./domController.js";
 
-const current = getCurrentWeather(data);
-console.log(current.currentTemperature);
-console.log(current.condition);
-console.log(current.datetime);
-console.log(current.feelslike);
-console.log(current.humidity);
-console.log(current.uvindex);
-console.log(current.windspeed);
-console.log(current.visibility);
+function getUserLocation() {
+  return new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
 
-const weekly = getWeeklyForecast(data);
-const hourly = getHourlyForecast(data);
-const todays = getTodaysForecast(data);
-console.log(weekly);
-console.log(hourly);
-console.log(todays);
+        resolve({ latitude, longitude });
+      },
+      (error) => {
+        reject(error);
+      },
+    );
+  });
+}
+const currentPlace = document.getElementById("currentPlace");
+const location = await getUserLocation();
+const locationString = `${location.latitude},${location.longitude}`;
 
-// console.log(data);
-// console.log(data.resolvedAddress);
-// console.log(data.days[0].temp);
-// console.log(data.days[0].tempmin);
-// console.log(data.days[0].tempmax);
-// console.log(data.days[0].hours[0].temp);
-// console.log(data.currentConditions.conditions);
+async function displayWeather(location) {
+  const data = await getWeatherData(location);
+  currentPlace.textContent = data.resolvedAddress;
+
+  const currentData = getCurrentWeather(data);
+  const weeklyData = getWeeklyForecast(data);
+  const hourlyData = getHourlyForecast(data);
+  const todaysData = getTodaysInfo(data);
+
+  displayCurrentWeather(currentData);
+  displayHourlyForcast(hourlyData);
+  displayTodaysInfo(todaysData);
+  displayWeeklyForcast(weeklyData);
+}
+
+displayWeather(locationString);
+
+function getSearchWeather() {
+  const searchBtn = document.getElementById("button");
+
+  searchBtn.addEventListener("click", () => {
+    const searchInput = document.getElementById("search").value.trim();
+    displayWeather(searchInput);
+  });
+}
+getSearchWeather();
