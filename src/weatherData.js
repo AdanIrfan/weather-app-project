@@ -7,6 +7,7 @@ export function getCurrentWeather(weather) {
   const uvindex = weather.currentConditions.uvindex;
   const visibility = weather.currentConditions.visibility;
   const datetime = weather.currentConditions.datetime;
+  const icon = weather.currentConditions.icon;
 
   const date = new Date(`${weather.days[0].datetime}T${datetime}`);
 
@@ -24,12 +25,13 @@ export function getCurrentWeather(weather) {
     uvindex,
     visibility,
     formattedDate,
+    icon,
   };
 }
 
 export function getTodaysInfo(weather) {
-  const maxtemp = Math.round(weather.days[0].tempmax);
-  const mintemp = Math.round(weather.days[0].tempmin);
+  const tempmax = Math.round(weather.days[0].tempmax);
+  const tempmin = Math.round(weather.days[0].tempmin);
   const description = weather.days[0].description;
 
   const sunrise = weather.days[0].sunrise;
@@ -51,8 +53,8 @@ export function getTodaysInfo(weather) {
   const icon = weather.days[0].icon;
 
   return {
-    maxtemp,
-    mintemp,
+    tempmax,
+    tempmin,
     description,
     formattedSunrise,
     formattedSunset,

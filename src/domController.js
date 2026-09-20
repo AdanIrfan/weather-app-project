@@ -1,4 +1,7 @@
-export function displayCurrentWeather(currentWeather, unit) {
+import { getIcon } from "./iconloader.js";
+
+export async function displayCurrentWeather(currentWeather, unit) {
+  const currentWeatherDiv = document.getElementById("currentWeather");
   const currentTemp = document.getElementById("currentTemp");
   const currentCondition = document.getElementById("currentCondition");
   const currentFeelsLike = document.getElementById("currentFeelsLike");
@@ -12,25 +15,35 @@ export function displayCurrentWeather(currentWeather, unit) {
   currentHumidity.textContent = `${currentWeather.humidity}%`;
   currentWind.textContent = `${currentWeather.windspeed} ${unit === "C" ? "km/h" : "mph"}`;
   currentUvIndex.textContent = currentWeather.uvindex;
+  currentWeatherDiv.querySelectorAll(".icon").forEach((icon) => icon.remove());
+  const img = document.createElement("img");
+  img.src = await getIcon(currentWeather.icon);
+  img.classList.add("icon");
+  currentWeatherDiv.appendChild(img);
 }
 
-export function displayTodaysInfo(todaysInfo, unit) {
+export async function displayTodaysInfo(todaysInfo, unit) {
+  const todaysForecastDiv = document.getElementById("todaysForecast");
   const description = document.getElementById("description");
-  const icon = document.getElementById("icon");
   const tempmax = document.getElementById("tempmax");
   const tempmin = document.getElementById("tempmin");
   const sunrise = document.getElementById("sunrise");
   const sunset = document.getElementById("sunset");
+  const img = document.createElement("img");
 
   description.textContent = todaysInfo.description;
-  icon.textContent = todaysInfo.icon;
   tempmin.textContent = `${todaysInfo.tempmin}°${unit}`;
   tempmax.textContent = `${todaysInfo.tempmax}°${unit}`;
   sunrise.textContent = todaysInfo.formattedSunrise;
   sunset.textContent = todaysInfo.formattedSunset;
+
+  todaysForecastDiv.querySelectorAll(".icon").forEach((icon) => icon.remove());
+  img.src = await getIcon(todaysInfo.icon);
+  img.classList.add("icon");
+  todaysForecastDiv.append(img);
 }
 
-export function displayHourlyForcast(hourlyForecast, unit) {
+export async function displayHourlyForcast(hourlyForecast, unit) {
   const hourlyContainer = document.getElementById("hourlyContainer");
 
   hourlyContainer.replaceChildren();
@@ -47,15 +60,16 @@ export function displayHourlyForcast(hourlyForecast, unit) {
     time.textContent = hourlyForecast[i].formattedDate;
     cardDiv.appendChild(time);
 
-    const icon = document.createElement("p");
-    icon.textContent = hourlyForecast[i].icon;
-    cardDiv.appendChild(icon);
+    const img = document.createElement("img");
+    img.src = await getIcon(hourlyForecast[i].icon);
+    img.classList.add("icon");
+    cardDiv.appendChild(img);
 
     hourlyContainer.appendChild(cardDiv);
   }
 }
 
-export function displayWeeklyForcast(weeklyForecast, unit) {
+export async function displayWeeklyForcast(weeklyForecast, unit) {
   const weeklyContainer = document.getElementById("weeklyContainer");
 
   weeklyContainer.replaceChildren();
@@ -68,9 +82,10 @@ export function displayWeeklyForcast(weeklyForecast, unit) {
     datetime.textContent = weeklyForecast[i].formattedDate;
     cardDiv.appendChild(datetime);
 
-    const icon = document.createElement("p");
-    icon.textContent = weeklyForecast[i].icon;
-    cardDiv.appendChild(icon);
+    const img = document.createElement("img");
+    img.src = await getIcon(weeklyForecast[i].icon);
+    img.classList.add("icon");
+    cardDiv.appendChild(img);
 
     const condition = document.createElement("p");
     condition.textContent = weeklyForecast[i].conditions;
