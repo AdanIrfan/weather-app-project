@@ -6,6 +6,7 @@ export function getCurrentWeather(weather) {
   const windspeed = weather.currentConditions.windspeed;
   const uvindex = weather.currentConditions.uvindex;
   const visibility = weather.currentConditions.visibility;
+  const precipprob = Math.round(weather.currentConditions.precipprob ?? 0);
   const datetime = weather.currentConditions.datetime;
   const icon = weather.currentConditions.icon;
 
@@ -24,6 +25,7 @@ export function getCurrentWeather(weather) {
     windspeed,
     uvindex,
     visibility,
+    precipprob,
     formattedDate,
     icon,
   };

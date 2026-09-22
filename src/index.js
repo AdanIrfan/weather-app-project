@@ -35,14 +35,14 @@ const location = await getUserLocation();
 const locationString = `${location.latitude},${location.longitude}`;
 const unitToggle = document.getElementById("unit-toggle");
 let currentPreference = "C";
-unitToggle.addEventListener("click", () => {
-  if (currentPreference === "C") {
-    currentPreference = "F";
-  } else {
-    currentPreference = "C";
-  }
-  displayWeather(locationString);
-});
+
+if (unitToggle) {
+  unitToggle.addEventListener("click", () => {
+    currentPreference = currentPreference === "C" ? "F" : "C";
+    unitToggle.textContent = currentPreference === "C" ? "°C" : "°F";
+    displayWeather(locationString);
+  });
+}
 
 async function displayWeather(location) {
   try {
@@ -69,14 +69,21 @@ displayWeather(locationString);
 
 function getSearchWeather() {
   const searchBtn = document.getElementById("searchLocation");
+  const searchInput = document.getElementById("search");
+
+  if (!searchBtn || !searchInput) {
+    return;
+  }
 
   searchBtn.addEventListener("click", () => {
-    const searchInput = document.getElementById("search").value.trim();
-    if (searchInput === "") {
+    const city = searchInput.value.trim();
+    if (city === "") {
       alert("Please enter a city");
       return;
     }
-    displayWeather(searchInput);
+    displayWeather(city);
   });
 }
 getSearchWeather();
+
+console.log("WEBPACK TEST 1");

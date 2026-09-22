@@ -6,48 +6,110 @@
     <title>Forecast</title>
   </head>
   <body>
-    <header>
-      <button type="button" id="unit-toggle">Unit</button>
-      <label for="search"
-        >Search
-        <input type="search" id="search" name="search" />
-      </label>
-      <button type="search" id="searchLocation">Search</button>
-    </header>
-    <main>
-      <div id="currentWeather">
-        <h1 id="currentPlace"></h1>
-        <h2 id="currentTemp"></h2>
-        <h3 id="currentCondition"></h3>
-      </div>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar" aria-label="Sidebar navigation">
+        <button type="button" class="nav-icon active" aria-label="Weather">
+          ☼
+        </button>
+        <button type="button" class="nav-icon" aria-label="Cities">⌕</button>
+        <button type="button" class="nav-icon" aria-label="Map">◌</button>
+        <button type="button" class="nav-icon" aria-label="Settings">⚙</button>
+        <button
+          type="button"
+          class="nav-icon"
+          id="unit-toggle"
+          aria-label="Toggle units"
+        >
+          °C
+        </button>
+      </aside>
 
-      <div id="airConditions">
-        <p id="currentFeelsLike"></p>
-        <p id="currentWind"></p>
-        <p id="currentHumidity"></p>
-        <p id="currentUvIndex"></p>
-      </div>
+      <div class="content-shell">
+        <header class="topbar">
+          <div class="search-area">
+            <input
+              type="search"
+              id="search"
+              name="search"
+              placeholder="Search for cities"
+            />
+          </div>
+          <button type="button" id="searchLocation" class="search-btn">
+            Search
+          </button>
+        </header>
 
-      <div id="todaysForecast">
-        <h1>Today's Information</h1>
-        <div id="todaysForecastDetails">
-          <p id="description"></p>
-          <p id="tempmax"></p>
-          <p id="tempmin"></p>
-          <p id="sunrise"></p>
-          <p id="sunset"></p>
-        </div>
-      </div>
+        <main class="dashboard">
+          <div id="currentWeather">
+            <div class="weather-header">
+              <div>
+                <h1 id="currentPlace"></h1>
+                <p class="rain-text">
+                  Chance of rain: <span id="currentRainChance">0%</span>
+                </p>
+              </div>
+            </div>
+            <div class="current-main-row">
+              <div class="temperature-block">
+                <h2 id="currentTemp"></h2>
+                <h3 id="currentCondition"></h3>
+              </div>
+            </div>
+          </div>
 
-      <div id="hourlyForcast">
-        <h1>Hourly Forecast</h1>
-        <div id="hourlyContainer"></div>
-      </div>
+          <div id="weeklyForcast">
+            <h1>7-day forecast</h1>
+            <div id="weeklyContainer"></div>
+          </div>
 
-      <div id="weeklyForcast">
-        <h1>7-DAY FORECAST</h1>
-        <div id="weeklyContainer"></div>
+          <div id="hourlyForcast">
+            <h1>Hourly forecast</h1>
+            <div id="hourlyContainer"></div>
+          </div>
+
+          <div id="todaysForecast">
+            <h1>Today's forecast</h1>
+            <div id="todaysForecastDetails">
+              <p>
+                <span class="forecast-label">Summary</span
+                ><span id="description"></span>
+              </p>
+              <p>
+                <span class="forecast-label">High</span
+                ><span id="tempmax"></span>
+              </p>
+              <p>
+                <span class="forecast-label">Low</span
+                ><span id="tempmin"></span>
+              </p>
+              <p>
+                <span class="forecast-label">Sunrise</span
+                ><span id="sunrise"></span>
+              </p>
+              <p>
+                <span class="forecast-label">Sunset</span
+                ><span id="sunset"></span>
+              </p>
+              <p>
+                <span class="forecast-label">Feels like</span
+                ><span id="currentFeelsLike"></span>
+              </p>
+              <p>
+                <span class="forecast-label">Wind</span
+                ><span id="currentWind"></span>
+              </p>
+              <p>
+                <span class="forecast-label">Humidity</span
+                ><span id="currentHumidity"></span>
+              </p>
+              <p>
+                <span class="forecast-label">UV index</span
+                ><span id="currentUvIndex"></span>
+              </p>
+            </div>
+          </div>
+        </main>
       </div>
-    </main>
+    </div>
   </body>
 </html>

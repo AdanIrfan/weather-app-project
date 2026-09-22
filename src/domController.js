@@ -8,6 +8,7 @@ export async function displayCurrentWeather(currentWeather, unit) {
   const currentHumidity = document.getElementById("currentHumidity");
   const currentWind = document.getElementById("currentWind");
   const currentUvIndex = document.getElementById("currentUvIndex");
+  const currentRainChance = document.getElementById("currentRainChance");
 
   currentTemp.textContent = `${currentWeather.currentTemperature}°${unit}`;
   currentCondition.textContent = currentWeather.condition;
@@ -15,6 +16,9 @@ export async function displayCurrentWeather(currentWeather, unit) {
   currentHumidity.textContent = `${currentWeather.humidity}%`;
   currentWind.textContent = `${currentWeather.windspeed} ${unit === "C" ? "km/h" : "mph"}`;
   currentUvIndex.textContent = currentWeather.uvindex;
+  if (currentRainChance) {
+    currentRainChance.textContent = `${currentWeather.precipprob}%`;
+  }
   currentWeatherDiv.querySelectorAll(".icon").forEach((icon) => icon.remove());
   const img = document.createElement("img");
   img.src = await getIcon(currentWeather.icon);
@@ -23,24 +27,17 @@ export async function displayCurrentWeather(currentWeather, unit) {
 }
 
 export async function displayTodaysInfo(todaysInfo, unit) {
-  const todaysForecastDiv = document.getElementById("todaysForecast");
   const description = document.getElementById("description");
   const tempmax = document.getElementById("tempmax");
   const tempmin = document.getElementById("tempmin");
   const sunrise = document.getElementById("sunrise");
   const sunset = document.getElementById("sunset");
-  const img = document.createElement("img");
 
   description.textContent = todaysInfo.description;
   tempmin.textContent = `${todaysInfo.tempmin}°${unit}`;
   tempmax.textContent = `${todaysInfo.tempmax}°${unit}`;
   sunrise.textContent = todaysInfo.formattedSunrise;
   sunset.textContent = todaysInfo.formattedSunset;
-
-  todaysForecastDiv.querySelectorAll(".icon").forEach((icon) => icon.remove());
-  img.src = await getIcon(todaysInfo.icon);
-  img.classList.add("icon");
-  todaysForecastDiv.append(img);
 }
 
 export async function displayHourlyForcast(hourlyForecast, unit) {
